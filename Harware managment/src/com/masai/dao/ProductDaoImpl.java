@@ -2,7 +2,10 @@ package com.masai.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.masai.exception.SoftwareException;
 import com.masai.model.Product;
@@ -71,7 +74,7 @@ public class ProductDaoImpl implements ProductDao{
 			int x =ps.executeUpdate();
 			
 			if(x>0) {
-				message="Record Inserted Syccessfully";
+				message="Product Added Successfully";
 			}
 			
 			
@@ -87,6 +90,101 @@ public class ProductDaoImpl implements ProductDao{
 		
 		return message;
 		
+		
+	}
+
+	@Override
+	public Product getProductDetailById(int ProductId) throws SoftwareException {
+		
+	
+		Product product=null;
+		
+		try(Connection conn= DBUtility.providconnection()){
+			
+			//query to get the Product details by product id;
+			PreparedStatement ps = conn.prepareStatement("select * from Products where ProductId=?");
+			
+			ps.setInt(1, ProductId);
+			
+			
+		
+			
+			ResultSet rs =ps.executeQuery();
+			
+			if(rs.next()) {
+				int i=rs.getInt("ProductId");
+				String n=rs.getString("ProductName");
+				
+				int q=rs.getInt("ProductQuantity");
+				String d=rs.getString("ProductDesc");
+				String ql=rs.getString("ProductCategory");
+				
+				//mapping the result set the Product been class object;
+				
+				product= new Product();
+				
+				product.setProductId(i);
+				product.setProductName(n);
+				product.setProductQuantity(q);
+				product.setProductDesc(d);
+				product.setProcductCategory(ql);
+			}
+			else {
+				throw new SoftwareException("Product does not exits with This Product Id :"+ ProductId);
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			throw new SoftwareException(e.getMessage());
+			
+		}
+		
+		
+		
+		return product;
+	}
+
+	@Override
+	public List<Product> getAllProductDetails() throws SoftwareException {
+		
+		
+		List<Product> products = new ArrayList<>();
+		
+		
+try(Connection conn= DBUtility.providconnection()){
+			
+			//query to get the Product details by product id;
+			PreparedStatement ps = conn.prepareStatement("select * from Products");
+			
+			
+			ResultSet rs =ps.executeQuery();
+			
+			while(rs.next()) {
+				int i=rs.getInt("ProductId");
+				String n=rs.getString("ProductName");
+				
+				int q=rs.getInt("ProductQuantity");
+				String d=rs.getString("ProductDesc");
+				String ql=rs.getString("ProductCategory");
+				
+				Product product = new Product(i,n,q,d,ql);
+				products.add(product);
+				
+				
+			}
+			if(products.isEmpty()) {
+				throw new SoftwareException("No Product found");
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			throw new SoftwareException(e.getMessage());
+			
+		}
+		
+		
+		
+		return products;
 		
 	}
 
