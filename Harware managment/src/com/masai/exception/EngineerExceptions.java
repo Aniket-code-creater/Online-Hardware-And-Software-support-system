@@ -1,6 +1,6 @@
 package com.masai.exception;
 
-public class EngineerExceptions {
+public class EngineerExceptions  extends Exception{
 	
 	public EngineerExceptions(){
 		

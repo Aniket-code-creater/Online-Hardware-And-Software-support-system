@@ -21,6 +21,10 @@ public interface HODDao {
 	
 	public String deleteEngineerByEngId(int EngId) throws HodExceptions;
 	
+	public List<Engineer> AllRaisedProblem() throws HodExceptions;
+	
+	public String AssignProblemToEngineerbyEngId( String EngAssignProblem,int EngId,int HODId) throws HodExceptions;
+	
 	
 
 }

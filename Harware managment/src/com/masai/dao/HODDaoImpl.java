@@ -104,15 +104,16 @@ public class HODDaoImpl implements HODDao{
 			try(Connection conn= DBUtility.providconnection()){
 				
 				
-				PreparedStatement ps = conn.prepareStatement("insert into Engineer(EngId,EngUserName, EngEmail, EngPass, EngCategory,EngAssignProblem) values(?,?,?,?,?,?)");
+				PreparedStatement ps = conn.prepareStatement("insert into Engineer(EngId,EngUserName, EngEmail, EngPass, EngCategory,HODId) values(?,?,?,?,?,?)");
 				
 				ps.setInt(1, engineer.getEngId());
 				ps.setString(2, engineer.getEngName());
 				ps.setString(3, engineer.getEngEmail());
 				ps.setString(4, engineer.getEngPass());
 				ps.setString(5, engineer.getEngCategory());
+				ps.setInt(6, engineer.getHODId());
 				
-				ps.setString(6, engineer.getEngAssignProblem());
+//				ps.setString(6, engineer.getEngAssignProblem());
 				
 				
 				
@@ -208,6 +209,98 @@ public class HODDaoImpl implements HODDao{
 			return message;
 		
 	}
+
+
+	@Override
+	public List<Engineer> AllRaisedProblem() throws HodExceptions {
+		
+		
+List<Engineer> eng=new ArrayList<>();
+		
+		try(Connection conn= DBUtility.providconnection()){
+			
+			
+			PreparedStatement ps = conn.prepareStatement("select EngProblem from Engineer");
+			
+			ResultSet rs= ps.executeQuery();
+			
+			while(rs.next()) {
+				
+				
+				int id=rs.getInt("EngId");
+				String n=rs.getString("EngUserName");
+//				String e=rs.getString("EngEmail");
+//				String p=rs.getString("EngPass");
+//				String c= rs.getString("EngCategory");
+				String pr=rs.getString("EngProblem");
+				
+				
+				Engineer Eng=new Engineer();
+				Eng.setEngProblem(pr);
+				Eng.setEngId(id);
+				Eng.setEngName(n);
+				
+				eng.add(Eng);
+			}
+			if(eng.isEmpty()) {
+				throw new HodExceptions("No Engineer Found");
+			}
+			
+			
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			throw new HodExceptions(e.getMessage());	
+		}
+		
+		
+		
+		return eng;
+	}
+
+
+	@Override
+	public String AssignProblemToEngineerbyEngId(String EngAssignProblem, int EngId, int HODId) throws HodExceptions {
+		
+		
+		
+		 String message = "Not Assign";
+			
+			
+			try(Connection conn= DBUtility.providconnection()){
+				
+				
+				PreparedStatement ps = conn.prepareStatement("update Engineer set EngAssignProblem=? where EngID=? AND HODId=?");
+				
+				
+				ps.setInt(2, EngId);
+				ps.setInt(3, HODId);
+				ps.setString(1, EngAssignProblem);
+				
+				
+				
+				int x =ps.executeUpdate();
+				
+				if(x>0) {
+					message="Problem Assign to the Engineer Successfully";
+				}
+				
+			}catch(SQLException e) {
+				e.printStackTrace();
+				throw new HodExceptions(e.getMessage());	
+			}
+			
+			return message;
+	}
+
+
+	
+
+
+	
+
+
+
 }
 
 
