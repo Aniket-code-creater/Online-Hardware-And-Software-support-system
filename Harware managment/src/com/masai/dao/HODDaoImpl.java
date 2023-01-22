@@ -294,10 +294,41 @@ List<Engineer> eng=new ArrayList<>();
 	}
 
 
-	
+	@Override
+	public String AssignEngineerToEmployeeComplain(int EngId, String Engineer_name, int HODId, int ComplainId)
+			throws HodExceptions {
+		
+		
+		 String message = "Not Assigned";
+			
+			
+			try(Connection conn= DBUtility.providconnection()){
+				
+				
+				PreparedStatement ps = conn.prepareStatement("update Complain set Engineer_name=?, EngId=?, HODId=? where ComplainId=?");
+				
+				
+				ps.setInt(2, EngId);
+				ps.setInt(3, HODId);
+				ps.setString(1, Engineer_name);
+				ps.setInt(4, ComplainId);
+				
+				
+				
+				int x =ps.executeUpdate();
+				
+				if(x>0) {
+					message="Problem Assigned Successfully";
+				}
+				
+			}catch(SQLException e) {
+				e.printStackTrace();
+				throw new HodExceptions(e.getMessage());	
+			}
+			
+			return message;
+	}
 
-
-	
 
 
 

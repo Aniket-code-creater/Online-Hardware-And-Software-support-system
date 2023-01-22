@@ -1,6 +1,9 @@
 package com.masai.dao;
 
+import java.util.List;
+
 import com.masai.exception.EngineerExceptions;
+import com.masai.model.Complain;
 import com.masai.model.Engineer;
 
 public interface EngineerDao {
@@ -17,5 +20,7 @@ public interface EngineerDao {
 	
 	//method for change the engineer password
 	public String ChangeEngineerPassByEngId(int EngId, String EngPass) throws EngineerExceptions;
+	
+	public List<Complain> AttendComplainHistoryByEngId(int EngId) throws EngineerExceptions;
 
 }

@@ -23,7 +23,15 @@ public interface HODDao {
 	
 	public List<Engineer> AllRaisedProblem() throws HodExceptions;
 	
+	
+	//Asign Any problem to engineer 
 	public String AssignProblemToEngineerbyEngId( String EngAssignProblem,int EngId,int HODId) throws HodExceptions;
+	
+	//Asign Any Employee Problem to engineer
+	public String AssignEngineerToEmployeeComplain(int EngId, String Engineer_name, int HODId, int ComplainId) throws HodExceptions;
+	
+	
+	
 	
 	
 

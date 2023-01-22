@@ -4,8 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.masai.exception.EmployeeExceptions;
 import com.masai.exception.EngineerExceptions;
 import com.masai.exception.HodExceptions;
+import com.masai.model.Complain;
 import com.masai.model.Engineer;
 import com.masai.utility.DBUtility;
 
@@ -163,6 +168,59 @@ public class EngineerDaoImpl implements EngineerDao{
 			}
 			
 			return message;
+	}
+
+
+	@Override
+	public List<Complain> AttendComplainHistoryByEngId(int EngId) throws EngineerExceptions {
+		
+		
+List<Complain> comp=new ArrayList<>();
+		
+		try(Connection conn= DBUtility.providconnection()){
+			
+			
+			PreparedStatement ps = conn.prepareStatement("select * from Complain where EngId=?");
+			ps.setInt(1, EngId);
+			
+			ResultSet rs= ps.executeQuery();
+			
+			while(rs.next()) {
+				int id=rs.getInt("complainId");
+				String c=rs.getString("raise_complain");
+				int e=rs.getInt("EmpId");
+				String en=rs.getString("Engineer_name");
+				int eId=rs.getInt("EngId");
+				
+				
+				int Hid=rs.getInt("HODId");
+				
+				
+				
+				Complain Eng=new Complain();
+				Eng.setComplainId(id);
+				Eng.setRaise_complain(c);
+				Eng.setEmpId(e);
+				Eng.setEngineer_name(en);
+				Eng.setEngId(eId);
+				Eng.setHODId(Hid);
+				
+				comp.add(Eng);
+			}
+			if(comp.isEmpty()) {
+				throw new EngineerExceptions("No complain History Found");
+			}
+			
+			
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			throw new EngineerExceptions(e.getMessage());	
+		}
+		
+		
+		
+		return comp;
 	}
 
 }
