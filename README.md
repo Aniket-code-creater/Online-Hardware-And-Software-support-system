@@ -1,7 +1,7 @@
 # Online Hardware and Software Support System
 it is Online Hardware and Software support system Application for any company.
 The Main objective of this Project Support Engineer or Employee for Hardware and software related complain.
-like Employee can raise and problem and Hod can assign engineer to resolve employee Hardware and Software related Complain.
+like Employee can raise problem and Hod can assign engineer to resolve employee Hardware and Software related Complain.
 
 ![image](https://user-images.githubusercontent.com/112688918/214010094-4c757dc3-3504-4ac8-a92f-9e7cdc14542a.png)
 
