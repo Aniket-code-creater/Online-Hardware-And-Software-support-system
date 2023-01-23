@@ -20,6 +20,32 @@ ER Diagram
 
 
 
-1. Role of HOD:-
+ Role of HOD
+ 
+  1. Login using his/her Acount.
+  2. Register a new Engineer with a username,email,Password.
+  3. Can see List of all the Registered Engineers.
+  4.	Can Delete any Engineers from the system.
+  5.	Can able to see all the raised problem.
+  6.	Can assign any problem to any Engineer.
+
+Role of Engineer :
+
+  1. Login with there own account.
+  2. Engineer can view the problem assigned to him by HOD.
+  3. Engineer can update the status of the problem addressed by him . i. e. whether it solved or any thing .
+  4. They can see list of all the problems attended by him/her.
+  5.	Engineer can change his/her password.
+
+Role of Employee: 
+   
+   1. Login with his/her account.
+   2. Employee can Register his self.
+   3. Employee can register any complain (hardware / software ) through the system.
+   4. Employee can see the status of their problem by using complain id . Status means they can check who (engineer) is assigned to his problem.
+   5. They can see all complain history raised by him/her.
+   6. Employee can change his/her password.
+
+  
 
 
